@@ -1,6 +1,8 @@
 using DistOMeter.GUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using DistOMeter.Controllers;
+using DistOMeter.Entities;
 
 namespace DistOMeter.GUI.Controllers
 {
@@ -8,14 +10,45 @@ namespace DistOMeter.GUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        private readonly IMeasurementController _measurementController;
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _measurementController = new MeasurementController();
         }
 
         public IActionResult Index()
         {
-            return View();
+            MeasurementInputViewModel model = new MeasurementInputViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(MeasurementInputViewModel model)
+        {
+            List<ObjectMeasurement> objects = model.Objects
+                .Where(obj => obj.AngleR > 0 && obj.AngleQ > 0)
+                .Select(obj => new ObjectMeasurement(
+                    obj.Name,
+                    obj.AngleR,
+                    obj.AngleQ
+                ))
+                .ToList();
+
+            MeasurementRequest request = new MeasurementRequest(
+                model.Baseline,
+                objects
+            );
+
+            MeasurementResult result =
+                await _measurementController.CalculateAsync(request);
+
+            MeasurementResultsViewModel resultsModel =
+                new MeasurementResultsViewModel(result);
+
+            return View("Results", resultsModel);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model DistOMeter.GUI.Models.MeasurementResultsViewModel
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+<h1>Results</h1>
+
+<h3>Distances from P</h3>
+
+@foreach (var distance in Model.Result.DistancesFromP)
+{
+    <p>
+        @distance.Key:
+        @distance.Value.ToString("F2") cm
+    </p>
+}
+
+<h3>Coordinates</h3>
+
+@foreach (var point in Model.Result.Objects)
+{
+    <p>
+        @point.Key:
+        (@point.Value.X.ToString("F2"),
+        @point.Value.Y.ToString("F2"))
+    </p>
+}
+
+@if (Model.Result.DistancesBetweenObjects.Count > 0)
+{
+    <h3>Distances between objects</h3>
+
+    @foreach (var distance in Model.Result.DistancesBetweenObjects)
+    {
+        <p>
+            @distance.From → @distance.To:
+            @distance.Distance.ToString("F2") cm
+        </p>
+    }
+}

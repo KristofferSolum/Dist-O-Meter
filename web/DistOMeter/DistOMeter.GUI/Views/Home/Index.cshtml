@@ -1,8 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DistOMeter.GUI.Models.MeasurementInputViewModel
+
+@{
+    ViewData["Title"] = "Dist-O-Meter";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Dist-O-Meter</h1>
+
+<form asp-action="Index" method="post">
+
+    <div class="mb-3">
+        <label asp-for="Baseline" class="form-label">Baseline (cm)</label>
+        <input asp-for="Baseline" class="form-control" />
+    </div>
+
+    <h3>Objects</h3>
+
+    @for (int i = 0; i < Model.Objects.Count; i++)
+    {
+        <div class="border rounded p-3 mb-3">
+
+            <div class="mb-2">
+                <label class="form-label">Name</label>
+                <input asp-for="Objects[i].Name" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Angle from R</label>
+                <input asp-for="Objects[i].AngleR" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Angle from Q</label>
+                <input asp-for="Objects[i].AngleQ" class="form-control" />
+            </div>
+
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">
+        Calculate
+    </button>
+
+</form>

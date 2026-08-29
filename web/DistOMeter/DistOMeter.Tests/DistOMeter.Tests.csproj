@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DistOMeter.Boundaries\DistOMeter.Boundaries.csproj" />
+    <ProjectReference Include="..\DistOMeter.Controllers\DistOMeter.Controllers.csproj" />
     <ProjectReference Include="..\DistOMeter.Entities\DistOMeter.Entities.csproj" />
   </ItemGroup>
 
