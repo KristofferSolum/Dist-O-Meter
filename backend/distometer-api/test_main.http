@@ -1,0 +1,35 @@
+# Test your FastAPI endpoints
+
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/hello/User
+Accept: application/json
+
+### Calculate Dist-O-Meter measurement
+
+POST http://127.0.0.1:8000/calculate
+Content-Type: application/json
+
+{
+  "baseline": 300,
+  "objects": [
+    {
+      "name": "A",
+      "angle_r": 70,
+      "angle_q": 40
+    },
+    {
+      "name": "B",
+      "angle_r": 55,
+      "angle_q": 50
+    },
+    {
+      "name": "C",
+      "angle_r": 30,
+      "angle_q": 60
+    }
+  ]
+}
