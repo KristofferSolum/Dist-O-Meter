@@ -20,3 +20,151 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.distometer-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.distometer-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.distometer-header {
+    margin-bottom: 32px;
+}
+
+    .distometer-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .distometer-header p {
+        color: #6c757d;
+        margin: 0;
+    }
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+    .section-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+.object-card {
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.angle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.calculate-button {
+    min-width: 140px;
+}
+
+@media (max-width: 600px) {
+    .angle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+}
+
+.object-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    align-items: end;
+}
+
+.results-page {
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.results-panel,
+.plot-panel {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.measurement-plot {
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    display: block;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.coordinates-title {
+    margin-top: 24px;
+}
+
+.results-panel h2,
+.plot-panel h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 850px) {
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}

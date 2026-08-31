@@ -9,9 +9,6 @@ public class MeasurementInputViewModel
     public List<ObjectInputViewModel> Objects { get; set; } =
         new List<ObjectInputViewModel>
         {
-            new ObjectInputViewModel { Name = "A" },
-            new ObjectInputViewModel { Name = "B" },
-            new ObjectInputViewModel { Name = "C" }
+            new ObjectInputViewModel()
         };
-
 }

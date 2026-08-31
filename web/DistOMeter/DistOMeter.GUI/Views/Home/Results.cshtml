@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
 
 @model DistOMeter.GUI.Models.MeasurementResultsViewModel
 
@@ -10,38 +6,74 @@
     ViewData["Title"] = "Results";
 }
 
-<h1>Results</h1>
+<div class="results-page">
 
-<h3>Distances from P</h3>
+    <div class="results-header">
+        <div>
+            <h1>Results</h1>
+            <p>Baseline: @Model.Result.Baseline.ToString("F0") cm</p>
+        </div>
 
-@foreach (var distance in Model.Result.DistancesFromP)
-{
-    <p>
-        @distance.Key:
-        @distance.Value.ToString("F2") cm
-    </p>
-}
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            New measurement
+        </a>
+    </div>
 
-<h3>Coordinates</h3>
+    <div class="results-grid">
 
-@foreach (var point in Model.Result.Objects)
-{
-    <p>
-        @point.Key:
-        (@point.Value.X.ToString("F2"),
-        @point.Value.Y.ToString("F2"))
-    </p>
-}
+        <div class="results-panel">
 
-@if (Model.Result.DistancesBetweenObjects.Count > 0)
-{
-    <h3>Distances between objects</h3>
+            <h2>Distances</h2>
 
-    @foreach (var distance in Model.Result.DistancesBetweenObjects)
-    {
-        <p>
-            @distance.From → @distance.To:
-            @distance.Distance.ToString("F2") cm
-        </p>
-    }
-}
+            <div class="distance-list">
+                @foreach (var distance in Model.Result.DistancesFromP)
+                {
+                    <div class="result-row">
+                        <span>P → @distance.Key</span>
+                        <strong>@distance.Value.ToString("F2") cm</strong>
+                    </div>
+                }
+
+                @foreach (var distance in Model.Result.DistancesBetweenObjects)
+                {
+                    <div class="result-row">
+                        <span>@distance.From → @distance.To</span>
+                        <strong>@distance.Distance.ToString("F2") cm</strong>
+                    </div>
+                }
+            </div>
+
+            <h2 class="coordinates-title">Coordinates</h2>
+
+            <div class="coordinate-list">
+                @foreach (var point in Model.Result.Objects)
+                {
+                    <div class="result-row">
+                        <span>@point.Key</span>
+                        <strong>
+                            (@point.Value.X.ToString("F2"),
+                            @point.Value.Y.ToString("F2"))
+                        </strong>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <div class="plot-panel">
+
+            <h2>Measurement Plot</h2>
+
+            @if (!string.IsNullOrEmpty(Model.Result.PlotBase64))
+            {
+                <img src="data:image/png;base64,@Model.Result.PlotBase64"
+                     alt="Measurement plot"
+                     class="measurement-plot" />
+            }
+
+        </div>
+
+    </div>
+</div>

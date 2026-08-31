@@ -4,41 +4,122 @@
     ViewData["Title"] = "Dist-O-Meter";
 }
 
-<h1>Dist-O-Meter</h1>
+<div class="distometer-page">
+    <div class="distometer-card">
 
-<form asp-action="Index" method="post">
-
-    <div class="mb-3">
-        <label asp-for="Baseline" class="form-label">Baseline (cm)</label>
-        <input asp-for="Baseline" class="form-control" />
-    </div>
-
-    <h3>Objects</h3>
-
-    @for (int i = 0; i < Model.Objects.Count; i++)
-    {
-        <div class="border rounded p-3 mb-3">
-
-            <div class="mb-2">
-                <label class="form-label">Name</label>
-                <input asp-for="Objects[i].Name" class="form-control" />
-            </div>
-
-            <div class="mb-2">
-                <label class="form-label">Angle from R</label>
-                <input asp-for="Objects[i].AngleR" class="form-control" />
-            </div>
-
-            <div class="mb-2">
-                <label class="form-label">Angle from Q</label>
-                <input asp-for="Objects[i].AngleQ" class="form-control" />
-            </div>
-
+        <div class="distometer-header">
+            <h1>Dist-O-Meter</h1>
+            <p>
+                Enter the baseline and measured angles to calculate object distances.
+            </p>
         </div>
-    }
 
-    <button type="submit" class="btn btn-primary">
-        Calculate
-    </button>
+        <form asp-action="Index" method="post">
 
-</form>
+            <div class="mb-4">
+                <label asp-for="Baseline" class="form-label">Baseline (cm)</label>
+                <input asp-for="Baseline"
+                       class="form-control"
+                       type="number"
+                       step="any" />
+            </div>
+
+            <div class="section-header">
+                <h2>Objects</h2>
+            </div>
+
+            <div id="objects-container">
+                @for (int i = 0; i < Model.Objects.Count; i++)
+                {
+                    <div class="object-card object-grid">
+
+                        <div>
+                            <label class="form-label">Name</label>
+                            <input name="Objects[@i].Name"
+                                   value="@Model.Objects[i].Name"
+                                   class="form-control" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">Angle from R</label>
+                            <input name="Objects[@i].AngleR"
+                                   value="@Model.Objects[i].AngleR"
+                                   class="form-control"
+                                   type="number"
+                                   step="any" />
+                        </div>
+
+                        <div>
+                            <label class="form-label">Angle from Q</label>
+                            <input name="Objects[@i].AngleQ"
+                                   value="@Model.Objects[i].AngleQ"
+                                   class="form-control"
+                                   type="number"
+                                   step="any" />
+                        </div>
+
+                    </div>
+                }
+            </div>
+            <div class="button-row">
+                <button type="button"
+                        id="add-object-button"
+                        class="btn btn-outline-secondary">
+                    + Add object
+                </button>
+
+                <button type="submit"
+                        class="btn btn-primary calculate-button">
+                    Calculate
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        let objectIndex = @Model.Objects.Count;
+
+        document.getElementById("add-object-button")
+            .addEventListener("click", function () {
+
+                const container =
+                    document.getElementById("objects-container");
+
+                const newObject = document.createElement("div");
+
+                newObject.className = "object-card object-grid";
+
+                newObject.innerHTML = `
+                    <div>
+                        <label class="form-label">Name</label>
+                        <input name="Objects[${objectIndex}].Name"
+                                class="form-control" />
+                    </div>
+
+                    <div>
+                        <label class="form-label">Angle from R</label>
+                        <input name="Objects[${objectIndex}].AngleR"
+                                class="form-control"
+                                type="number"
+                                step="any" />
+                    </div>
+
+                    <div>
+                        <label class="form-label">Angle from Q</label>
+                        <input name="Objects[${objectIndex}].AngleQ"
+                                class="form-control"
+                                type="number"
+                                step="any" />
+                    </div>
+                `;
+
+                container.appendChild(newObject);
+
+                objectIndex++;
+            });
+    </script>
+}

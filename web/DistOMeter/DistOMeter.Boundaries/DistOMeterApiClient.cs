@@ -33,7 +33,14 @@ public class DistOMeterApiClient : IDistOMeterApiClient
             _jsonOptions
         );
 
-        response.EnsureSuccessStatusCode();
+        if(!response.IsSuccessStatusCode)
+{
+            string error = await response.Content.ReadAsStringAsync();
+
+            throw new Exception(
+                $"API error {(int)response.StatusCode}: {error}"
+            );
+        }
 
         MeasurementResult? result =
             await response.Content.ReadFromJsonAsync<MeasurementResult>(
