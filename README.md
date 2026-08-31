@@ -1,4 +1,4 @@
-\# Dist-O-Meter
+# Dist-O-Meter
 
 
 
@@ -10,19 +10,19 @@ The project consists of:
 
 
 
-\- A Python FastAPI backend for calculations and plotting
+- A Python FastAPI backend for calculations and plotting
 
-\- An ASP.NET Core MVC frontend
+- An ASP.NET Core MVC frontend
 
-\- Automated PowerShell scripts for setup and startup
-
-
-
-\---
+- Automated PowerShell scripts for setup and startup
 
 
 
-\## Quick Start
+---
+
+
+
+## Quick Start
 
 
 
@@ -30,7 +30,7 @@ The easiest way to run Dist-O-Meter is with the included PowerShell scripts.
 
 
 
-\### 1. Clone the repository
+### 1. Clone the repository
 
 
 
@@ -44,7 +44,7 @@ cd dist-o-meter
 
 
 
-\### 2. Run setup
+### 2. Run setup
 
 
 
@@ -60,15 +60,15 @@ The setup script automatically:
 
 
 
-\- Downloads the required Python environment if needed
+- Downloads the required Python environment if needed
 
-\- Creates the Python virtual environment
+- Creates the Python virtual environment
 
-\- Installs the backend dependencies
+- Installs the backend dependencies
 
-\- Downloads .NET 8 SDK if needed
+- Downloads .NET 8 SDK if needed
 
-\- Builds the ASP.NET Core application
+- Builds the ASP.NET Core application
 
 
 
@@ -76,7 +76,7 @@ You do \*\*not\*\* need to install Visual Studio, Python, or .NET manually.
 
 
 
-\### 3. Start Dist-O-Meter
+### 3. Start Dist-O-Meter
 
 
 
@@ -92,9 +92,9 @@ This starts both:
 
 
 
-\- FastAPI backend
+- FastAPI backend
 
-\- ASP.NET Core web application
+- ASP.NET Core web application
 
 
 
@@ -114,11 +114,11 @@ http://127.0.0.1:5000
 
 
 
-\---
+---
 
 
 
-\## Requirements
+## Requirements
 
 
 
@@ -126,13 +126,13 @@ For the automatic setup, you only need:
 
 
 
-\- Windows
+- Windows
 
-\- PowerShell
+- PowerShell
 
-\- Git
+- Git
 
-\- Internet connection during the first setup
+- Internet connection during the first setup
 
 
 
@@ -140,11 +140,11 @@ All other required development/runtime tools are downloaded automatically by `se
 
 
 
-\---
+---
 
 
 
-\## How It Works
+## How It Works
 
 
 
@@ -168,11 +168,11 @@ For each object, the user enters:
 
 
 
-\- Object name
+- Object name
 
-\- Angle measured from R
+- Angle measured from R
 
-\- Angle measured from Q
+- Angle measured from Q
 
 
 
@@ -180,13 +180,13 @@ The backend triangulates the object position and calculates:
 
 
 
-\- Distance from P to each object
+- Distance from P to each object
 
-\- Distance between every pair of objects
+- Distance between every pair of objects
 
-\- Object coordinates
+- Object coordinates
 
-\- A coordinate plot of the measurement
+- A coordinate plot of the measurement
 
 
 
@@ -194,23 +194,23 @@ All distances are measured in centimeters.
 
 
 
-\---
+---
 
 
 
-\## Using the Application
+## Using the Application
 
 
 
-1\. Enter the baseline length in centimeters.
+1. Enter the baseline length in centimeters.
 
-2\. Enter a name and the two measured angles for the first object.
+2. Enter a name and the two measured angles for the first object.
 
-3\. Use \*\*+ Add object\*\* to add additional objects.
+3. Use **+ Add object** to add additional objects.
 
-4\. Press \*\*Calculate\*\*.
+4. Press **Calculate**.
 
-5\. The results page displays:
+5. The results page displays:
 
 &#x20;  - Distances from P to each object
 
@@ -222,11 +222,11 @@ All distances are measured in centimeters.
 
 
 
-\---
+---
 
 
 
-\## Development
+## Development
 
 
 
