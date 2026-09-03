@@ -5,7 +5,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
-def calculate_point(baseline: int, angel_r: int, angel_q: int):
+def calculate_point(baseline: int, angel_r: float, angel_q: float):
     """
         Finds the coordinates of a point with triangulation
 
@@ -36,7 +36,7 @@ def calculate_point(baseline: int, angel_r: int, angel_q: int):
     return x, y
 
 
-def calculate_distance_between_points(point1: tuple, point2: tuple = (0, 0)):
+def calculate_distance_between_points(point1: tuple, point2: tuple = (0.0, 0.0)):
     """
     Calculate the distance between two points in 2D space.
 

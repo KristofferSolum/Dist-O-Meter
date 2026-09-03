@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using DistOMeter.Controllers;
 using DistOMeter.Entities;
+using System.Runtime.CompilerServices;
 
 namespace DistOMeter.GUI.Controllers
 {
@@ -36,6 +37,18 @@ namespace DistOMeter.GUI.Controllers
                     obj.AngleQ
                 ))
                 .ToList();
+
+                Console.WriteLine($"Baseline: {model.Baseline}");
+                Console.WriteLine($"ModelState valid: {ModelState.IsValid}");
+
+                for (int i = 0; i < model.Objects.Count; i++)
+                {
+                    Console.WriteLine(
+                        $"Object {i}: Name={model.Objects[i].Name}, " +
+                        $"AngleR={model.Objects[i].AngleR}, " +
+                        $"AngleQ={model.Objects[i].AngleQ}"
+                    );
+                }
 
             MeasurementRequest request = new MeasurementRequest(
                 model.Baseline,
