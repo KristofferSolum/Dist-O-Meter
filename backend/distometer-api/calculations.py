@@ -16,6 +16,7 @@ def calculate_point(baseline: int, angel_r: float, angel_q: float):
         angle_r: angle at R, measured from the direction R -> P
         angle_q: angle at Q, measured from the direction Q -> P
         """
+    angel_r = 180 - angel_r
 
     # Convert angles from degrees to radians
     alpha = math.radians(angel_r)
