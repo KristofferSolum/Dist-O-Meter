@@ -41,8 +41,6 @@ def calculate_distance_between_points(point1: tuple, point2: tuple = (0.0, 0.0))
     """
     Calculate the distance between two points in 2D space.
 
-    point1: A dictionary with 'x' and 'y' coordinates of the first point.
-    point2: A dictionary with 'x' and 'y' coordinates of the second point.
     """
     x1, y1 = point1
     x2, y2 = point2
@@ -55,21 +53,7 @@ def create_coordinate_plot(points: dict[str, tuple[float, float]]) -> bytes:
     Creates a PNG image showing P, R, Q and the measured objects
     in a 2D coordinate system.
 
-    points:
-        Dictionary containing point names and coordinates.
 
-        Example:
-        {
-            "P": (0, 0),
-            "R": (-150, 0),
-            "Q": (150, 0),
-            "A": (-40, 200),
-            "B": (20, 250),
-            "C": (120, 170)
-        }
-
-    Returns:
-        PNG image as bytes.
     """
 
     fig, ax = plt.subplots(figsize=(9, 7))
