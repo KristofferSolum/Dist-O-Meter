@@ -29,8 +29,25 @@ namespace DistOMeter.GUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(MeasurementInputViewModel model)
         {
+            if (model.Baseline <= 0)
+                ModelState.AddModelError("", "The baseline must be greater than zero.");
+
+            if (model.Objects.Count == 0)
+                ModelState.AddModelError("", "Add at least one object.");
+
+            foreach (var obj in model.Objects)
+            {
+                if (string.IsNullOrWhiteSpace(obj.Name) || obj.AngleR <= 0 || obj.AngleQ <= 0 || obj.AngleR >= 180 || obj.AngleQ >= 180 || obj.AngleR <= obj.AngleQ)
+                    ModelState.AddModelError("", "Each object needs a name and valid angles. The angle from R must be greater than the angle from Q.");
+            }
+
+            if (model.Objects.Select(obj => obj.Name?.Trim()).Distinct(StringComparer.OrdinalIgnoreCase).Count() != model.Objects.Count)
+                ModelState.AddModelError("", "Each object must have a unique name.");
+
+            if (!ModelState.IsValid)
+                return View(model);
+
             List<ObjectMeasurement> objects = model.Objects
-                .Where(obj => obj.AngleR > 0 && obj.AngleQ > 0)
                 .Select(obj => new ObjectMeasurement(
                     obj.Name,
                     obj.AngleR,
@@ -38,25 +55,22 @@ namespace DistOMeter.GUI.Controllers
                 ))
                 .ToList();
 
-                Console.WriteLine($"Baseline: {model.Baseline}");
-                Console.WriteLine($"ModelState valid: {ModelState.IsValid}");
-
-                for (int i = 0; i < model.Objects.Count; i++)
-                {
-                    Console.WriteLine(
-                        $"Object {i}: Name={model.Objects[i].Name}, " +
-                        $"AngleR={model.Objects[i].AngleR}, " +
-                        $"AngleQ={model.Objects[i].AngleQ}"
-                    );
-                }
-
             MeasurementRequest request = new MeasurementRequest(
                 model.Baseline,
                 objects
             );
 
-            MeasurementResult result =
-                await _measurementController.CalculateAsync(request);
+            MeasurementResult result;
+            try
+            {
+                result = await _measurementController.CalculateAsync(request);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Measurement calculation failed");
+                ModelState.AddModelError("", "The measurement could not be calculated. Check the values and try again.");
+                return View(model);
+            }
 
             MeasurementResultsViewModel resultsModel =
                 new MeasurementResultsViewModel(result);

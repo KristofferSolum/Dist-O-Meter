@@ -1,125 +1,107 @@
-﻿@model DistOMeter.GUI.Models.MeasurementInputViewModel
+@model DistOMeter.GUI.Models.MeasurementInputViewModel
+@{ ViewData["Title"] = "Measure distances with confidence"; }
 
-@{
-    ViewData["Title"] = "Dist-O-Meter";
-}
-
-<div class="distometer-page">
-    <div class="distometer-card">
-
-        <div class="distometer-header">
-            <h1>Dist-O-Meter</h1>
-            <p>
-                Enter the baseline and measured angles to calculate object distances.
-            </p>
-        </div>
-
-        <form asp-action="Index" method="post">
-
-            <div class="mb-4">
-                <label asp-for="Baseline" class="form-label">Baseline (cm)</label>
-                <input asp-for="Baseline"
-                       class="form-control"
-                       type="number"
-                       step="any" />
-            </div>
-
-            <div class="section-header">
-                <h2>Objects</h2>
-            </div>
-
-            <div id="objects-container">
-                @for (int i = 0; i < Model.Objects.Count; i++)
-                {
-                    <div class="object-card object-grid">
-
-                        <div>
-                            <label class="form-label">Name</label>
-                            <input name="Objects[@i].Name"
-                                   value="@Model.Objects[i].Name"
-                                   class="form-control" />
-                        </div>
-
-                        <div>
-                            <label class="form-label">Angle from R</label>
-                            <input name="Objects[@i].AngleR"
-                                   value="@Model.Objects[i].AngleR"
-                                   class="form-control"
-                                   type="number"
-                                   step="any" />
-                        </div>
-
-                        <div>
-                            <label class="form-label">Angle from Q</label>
-                            <input name="Objects[@i].AngleQ"
-                                   value="@Model.Objects[i].AngleQ"
-                                   class="form-control"
-                                   type="number"
-                                   step="any" />
-                        </div>
-
-                    </div>
-                }
-            </div>
-            <div class="button-row">
-                <button type="button"
-                        id="add-object-button"
-                        class="btn btn-outline-secondary">
-                    + Add object
-                </button>
-
-                <button type="submit"
-                        class="btn btn-primary calculate-button">
-                    Calculate
-                </button>
-            </div>
-
-        </form>
+<section class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow"><span></span> MEASURE SMARTER. STAY SAFE.</div>
+      <h1>The distance you need.<br><em>Without crossing the line.</em></h1>
+      <p>Dist-O-Meter calculates distances to and between objects using one known baseline and two measured angles. You can stay behind point P throughout the measurement.</p>
+      <div class="hero-actions"><a class="button button-primary" href="#maaling">Start a measurement <span aria-hidden="true">↗</span></a><a class="text-link" href="#metode">See how it works ↓</a></div>
+      <div class="hero-foot"><span class="check">✓</span> Based on triangulation <span class="divider-dot">·</span> Results in centimetres</div>
     </div>
-</div>
+    <div class="hero-visual">
+      <div class="diagram-top"><span><i></i> MEASUREMENT AREA</span><span>FIGURE 01 / TRIANGULATION</span></div>
+      <svg viewBox="0 0 600 430" role="img" aria-labelledby="diagramTitle diagramDescription">
+        <title id="diagramTitle">Measurement principle</title><desc id="diagramDescription">R and Q form the baseline, with P at its midpoint. Angles from R and Q are used to locate objects A and B.</desc>
+        <defs><pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M 34 0 L 0 0 0 34" fill="none" stroke="#31515b" stroke-width="1" opacity=".55"/></pattern></defs>
+        <rect width="600" height="430" fill="url(#grid)"/>
+        <path d="M78 335 H522" stroke="#527480" stroke-width="2" stroke-dasharray="5 7"/>
+        <path d="M145 335 L272 100 L455 335 M145 335 L390 164 L455 335" fill="none" stroke="#7ac9b7" stroke-width="1.5" opacity=".75"/>
+        <path d="M300 335 L272 100 M300 335 L390 164" fill="none" stroke="#e9be83" stroke-width="2" stroke-dasharray="5 6"/>
+        <path d="M145 335 H455" stroke="#f5f6ee" stroke-width="3"/>
+        <path d="M145 321 V349 M455 321 V349" stroke="#f5f6ee" stroke-width="2"/>
+        <circle cx="145" cy="335" r="6" fill="#f5f6ee"/><circle cx="300" cy="335" r="9" fill="#e9be83"/><circle cx="455" cy="335" r="6" fill="#f5f6ee"/>
+        <circle cx="272" cy="100" r="20" fill="#2e756f" opacity=".5"/><circle cx="272" cy="100" r="7" fill="#a4e8d7"/>
+        <circle cx="390" cy="164" r="20" fill="#2e756f" opacity=".5"/><circle cx="390" cy="164" r="7" fill="#a4e8d7"/>
+        <text x="272" y="65" text-anchor="middle" class="svg-label">OBJECT A</text><text x="428" y="145" class="svg-label">OBJECT B</text>
+        <text x="145" y="375" text-anchor="middle" class="svg-point">R</text><text x="300" y="375" text-anchor="middle" class="svg-point highlight">P</text><text x="455" y="375" text-anchor="middle" class="svg-point">Q</text>
+        <text x="300" y="318" text-anchor="middle" class="svg-small">KNOWN BASELINE</text>
+      </svg>
+      <div class="diagram-bottom"><span><i class="solid-line"></i> Baseline R–Q</span><span><i class="dashed-line"></i> Distance from P</span></div>
+    </div>
+  </div>
+</section>
 
-@section Scripts
-{
-    <script>
-        let objectIndex = @Model.Objects.Count;
+<section class="method" id="metode"><div class="shell">
+  <div class="section-intro"><div><span class="kicker">THE METHOD</span><h2>Two angles.<br>One clear answer.</h2></div><p>A simple setup gives you the distances you need while you remain behind point P.</p></div>
+  <div class="steps">
+    <article><span class="step-no">01 /</span><span class="step-icon" aria-hidden="true">↔</span><h3>Set the baseline</h3><p>Measure the distance between R and Q. Point P lies at the midpoint and serves as the reference for the results.</p></article>
+    <article><span class="step-no">02 /</span><span class="step-icon" aria-hidden="true">∠</span><h3>Enter the angles</h3><p>Enter the angle from R and from Q to each object you want to measure.</p></article>
+    <article><span class="step-no">03 /</span><span class="step-icon" aria-hidden="true">◎</span><h3>See the results</h3><p>View distances from P, distances between objects, coordinates and a measurement plot.</p></article>
+  </div>
+</div></section>
 
-        document.getElementById("add-object-button")
-            .addEventListener("click", function () {
+<section class="measurement" id="maaling"><div class="shell measurement-grid">
+  <div class="measurement-aside"><span class="kicker">MEASUREMENT TOOL</span><h2>Make a measurement.</h2><p>Enter the baseline and your measured angles. Add more objects as needed.</p><div class="aside-note"><span aria-hidden="true">⌖</span><div><strong>Remember the reference point</strong><p>R and Q are the ends of the baseline. P lies exactly at its midpoint.</p></div></div></div>
+  <div class="measurement-card">
+    <div class="form-heading"><span class="form-heading-icon" aria-hidden="true">⌖</span><div><h3>New measurement</h3><p>All distances are shown in centimetres</p></div></div>
+    <form asp-action="Index" method="post">
+      <div asp-validation-summary="ModelOnly" class="form-error" role="alert"></div>
+      <div class="field-block"><label asp-for="Baseline">Baseline R–Q <span>cm</span></label><input asp-for="Baseline" value="@(Model.Baseline > 0 ? Model.Baseline.ToString(System.Globalization.CultureInfo.InvariantCulture) : "")" type="number" min="0.01" step="any" inputmode="decimal" required placeholder="e.g. 300"><small>The known distance between the reference points.</small></div>
+      <div class="form-divider"></div>
+      <div class="objects-heading"><div><h4>Objects</h4><p>Enter the angles from both endpoints.</p></div><span id="object-count" class="count-pill">@Model.Objects.Count @(Model.Objects.Count == 1 ? "object" : "objects")</span></div>
+      <div id="objects-container">
+        @for (int i = 0; i < Model.Objects.Count; i++) {
+          <div class="object-card"><div class="object-card-top"><span class="object-badge">@(i + 1)</span><strong>Object @(i + 1)</strong></div><div class="object-fields">
+            <div><label for="object-name-@i">Name</label><input id="object-name-@i" name="Objects[@i].Name" value="@Model.Objects[i].Name" required placeholder="e.g. Object A"></div>
+            <div><label for="object-r-@i">Angle from R <span>degrees</span></label><input id="object-r-@i" name="Objects[@i].AngleR" value="@(Model.Objects[i].AngleR > 0 ? Model.Objects[i].AngleR.ToString(System.Globalization.CultureInfo.InvariantCulture) : "")" type="number" min="0.01" max="179.99" step="any" inputmode="decimal" required placeholder="°"></div>
+            <div><label for="object-q-@i">Angle from Q <span>degrees</span></label><input id="object-q-@i" name="Objects[@i].AngleQ" value="@(Model.Objects[i].AngleQ > 0 ? Model.Objects[i].AngleQ.ToString(System.Globalization.CultureInfo.InvariantCulture) : "")" type="number" min="0.01" max="179.99" step="any" inputmode="decimal" required placeholder="°"></div>
+          </div></div>
+        }
+      </div>
+      <div class="form-actions"><button type="button" id="add-object-button" class="button button-secondary"><span aria-hidden="true">＋</span> Add object</button><button type="submit" class="button button-primary">Calculate distances <span aria-hidden="true">↗</span></button></div>
+    </form>
+  </div>
+</div></section>
 
-                const container =
-                    document.getElementById("objects-container");
-
-                const newObject = document.createElement("div");
-
-                newObject.className = "object-card object-grid";
-
-                newObject.innerHTML = `
-                    <div>
-                        <label class="form-label">Name</label>
-                        <input name="Objects[${objectIndex}].Name"
-                                class="form-control" />
-                    </div>
-
-                    <div>
-                        <label class="form-label">Angle from R</label>
-                        <input name="Objects[${objectIndex}].AngleR"
-                                class="form-control"
-                                type="number"
-                                step="any" />
-                    </div>
-
-                    <div>
-                        <label class="form-label">Angle from Q</label>
-                        <input name="Objects[${objectIndex}].AngleQ"
-                                class="form-control"
-                                type="number"
-                                step="any" />
-                    </div>
-                `;
-
-                container.appendChild(newObject);
-
-                objectIndex++;
-            });
-    </script>
+@section Scripts {
+<script>
+  const container = document.getElementById('objects-container');
+  const count = document.getElementById('object-count');
+  let objectIndex = @Model.Objects.Count;
+  document.getElementById('add-object-button').addEventListener('click', () => {
+    const index = objectIndex++;
+    const card = document.createElement('div');
+    card.className = 'object-card';
+    card.innerHTML = `<div class="object-card-top"><span class="object-badge">${index + 1}</span><strong>Object ${index + 1}</strong><button type="button" class="remove-object" aria-label="Remove object ${index + 1}">Remove</button></div><div class="object-fields"><div><label for="object-name-${index}">Name</label><input id="object-name-${index}" name="Objects[${index}].Name" required placeholder="e.g. Object B"></div><div><label for="object-r-${index}">Angle from R <span>degrees</span></label><input id="object-r-${index}" name="Objects[${index}].AngleR" type="number" min="0.01" max="179.99" step="any" inputmode="decimal" required placeholder="°"></div><div><label for="object-q-${index}">Angle from Q <span>degrees</span></label><input id="object-q-${index}" name="Objects[${index}].AngleQ" type="number" min="0.01" max="179.99" step="any" inputmode="decimal" required placeholder="°"></div></div>`;
+    card.querySelector('.remove-object').addEventListener('click', () => {
+      card.remove();
+      count.textContent = container.children.length + (container.children.length === 1 ? ' object' : ' objects');
+    });
+    container.appendChild(card);
+    count.textContent = container.children.length + (container.children.length === 1 ? ' object' : ' objects');
+    card.querySelector('input').focus();
+  });
+  container.addEventListener('input', event => {
+    if (event.target.matches('[name$=".AngleR"]')) event.target.setCustomValidity('');
+  });
+  document.querySelector('.measurement-card form').addEventListener('submit', event => {
+    let valid = true;
+    [...container.children].forEach((card, index) => {
+      const angleR = card.querySelector('[name$=".AngleR"]');
+      const angleQ = card.querySelector('[name$=".AngleQ"]');
+      angleR.setCustomValidity('');
+      if (Number(angleR.value) <= Number(angleQ.value)) {
+        angleR.setCustomValidity('The angle from R must be greater than the angle from Q.');
+        if (valid) angleR.reportValidity();
+        valid = false;
+      }
+      card.querySelectorAll('input').forEach(input => {
+        input.name = input.name.replace(/Objects\[\d+\]/, `Objects[${index}]`);
+      });
+    });
+    if (!valid) event.preventDefault();
+  });
+</script>
 }

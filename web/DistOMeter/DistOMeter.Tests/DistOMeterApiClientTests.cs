@@ -27,7 +27,7 @@ public class DistOMeterApiClientTests
             {
                 new ObjectMeasurement("A", 70, 40),
                 new ObjectMeasurement("B", 55, 50),
-                new ObjectMeasurement("C", 30, 60)
+                new ObjectMeasurement("C", 65, 60)
             }
         );
 

@@ -1,79 +1,35 @@
-﻿
-
 @model DistOMeter.GUI.Models.MeasurementResultsViewModel
+@{ ViewData["Title"] = "Measurement results"; }
 
-@{
-    ViewData["Title"] = "Results";
-}
-
-<div class="results-page">
-
-    <div class="results-header">
-        <div>
-            <h1>Results</h1>
-            <p>Baseline: @Model.Result.Baseline.ToString("F0") cm</p>
+<section class="results-page"><div class="shell">
+  <div class="results-header"><div><span class="kicker">CALCULATION COMPLETE</span><h1>Measurement results</h1><p>Baseline R–Q: <strong>@Model.Result.Baseline.ToString("F0") cm</strong></p></div><a asp-controller="Home" asp-action="Index" asp-fragment="maaling" class="button button-secondary">← New measurement</a></div>
+  <div class="results-grid">
+    <div class="results-panel">
+      <h2>Distances from P</h2>
+      <div class="distance-list">
+        @foreach (var distance in Model.Result.DistancesFromP) {
+          <div class="result-row"><span>P → @distance.Key</span><strong>@distance.Value.ToString("F2") cm</strong></div>
+        }
+      </div>
+      @if (Model.Result.DistancesBetweenObjects.Any()) {
+        <h2 class="coordinates-title">Between objects</h2>
+        <div class="distance-list">
+          @foreach (var distance in Model.Result.DistancesBetweenObjects) {
+            <div class="result-row"><span>@distance.From → @distance.To</span><strong>@distance.Distance.ToString("F2") cm</strong></div>
+          }
         </div>
-
-        <a asp-controller="Home"
-           asp-action="Index"
-           class="btn btn-outline-secondary">
-            New measurement
-        </a>
+      }
+      <h2 class="coordinates-title">Coordinates</h2>
+      <div class="coordinate-list">
+        @foreach (var point in Model.Result.Objects) {
+          <div class="result-row"><span>@point.Key</span><strong>(@point.Value.X.ToString("F2"), @point.Value.Y.ToString("F2"))</strong></div>
+        }
+      </div>
     </div>
-
-    <div class="results-grid">
-
-        <div class="results-panel">
-
-            <h2>Distances</h2>
-
-            <div class="distance-list">
-                @foreach (var distance in Model.Result.DistancesFromP)
-                {
-                    <div class="result-row">
-                        <span>P → @distance.Key</span>
-                        <strong>@distance.Value.ToString("F2") cm</strong>
-                    </div>
-                }
-
-                @foreach (var distance in Model.Result.DistancesBetweenObjects)
-                {
-                    <div class="result-row">
-                        <span>@distance.From → @distance.To</span>
-                        <strong>@distance.Distance.ToString("F2") cm</strong>
-                    </div>
-                }
-            </div>
-
-            <h2 class="coordinates-title">Coordinates</h2>
-
-            <div class="coordinate-list">
-                @foreach (var point in Model.Result.Objects)
-                {
-                    <div class="result-row">
-                        <span>@point.Key</span>
-                        <strong>
-                            (@point.Value.X.ToString("F2"),
-                            @point.Value.Y.ToString("F2"))
-                        </strong>
-                    </div>
-                }
-            </div>
-
-        </div>
-
-        <div class="plot-panel">
-
-            <h2>Measurement Plot</h2>
-
-            @if (!string.IsNullOrEmpty(Model.Result.PlotBase64))
-            {
-                <img src="data:image/png;base64,@Model.Result.PlotBase64"
-                     alt="Measurement plot"
-                     class="measurement-plot" />
-            }
-
-        </div>
-
+    <div class="plot-panel"><h2>Measurement plot</h2>
+      @if (!string.IsNullOrEmpty(Model.Result.PlotBase64)) {
+        <img src="data:image/png;base64,@Model.Result.PlotBase64" alt="Coordinate plot showing the reference points and measured objects" class="measurement-plot" />
+      }
     </div>
-</div>
+  </div>
+</div></section>
